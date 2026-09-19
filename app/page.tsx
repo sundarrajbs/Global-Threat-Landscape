@@ -78,7 +78,11 @@ export default function Home() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="globe" className="min-h-0 flex-1">
-              <ThreatGlobe />
+              <ThreatGlobe
+                events={filteredEvents}
+                onSelect={setSelectedEvent}
+                selectedId={selectedEvent?.id}
+              />
             </TabsContent>
             <TabsContent value="map" className="min-h-0 flex-1">
               <GlobalMap
