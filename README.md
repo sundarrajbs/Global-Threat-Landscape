@@ -6,11 +6,13 @@ A real-time **Global Cyber Threat Intelligence Dashboard** — live malicious IP
 
 ## Features
 
-- **3D Threat Globe** (`components/ThreatGlobe.tsx`) — a WebGL globe built with `deck.gl` (`_GlobeView`), rendering great-circle attack arcs, pulsing "glowing ring" impact markers, and a dark basemap, driven by a self-contained mock telemetry generator (new event every 800ms, buffer capped at 100). Auto-rotates and yields to the user on drag/zoom. Toggle between this and the 2D map from the tab bar above the map panel.
+- **3D Threat Globe** (`components/ThreatGlobe.tsx`) — a WebGL globe built with `deck.gl` (`_GlobeView`), rendering great-circle attack arcs and pulsing "glowing ring" impact markers over a dark basemap, driven by the same live/filtered `/api/threats` feed as the rest of the dashboard (capped to the 45 most recent events for render performance). Clicking an arc or marker opens the drill-down modal, same as the 2D map. Auto-rotates and yields to the user on drag/zoom. Toggle between this and the 2D map from the tab bar above the map panel.
 - **Interactive 2D world map** with animated attack flow arcs, pulsing hotspot rings, and origin/target markers (`react-simple-maps`).
 - **Live metric ticker**: active threats, attacks/min, high-risk CVEs, top attacking country, critical alerts.
 - **Filtering engine**: free-text search over IOCs/countries, threat-type toggles, severity toggles, region select.
 - **Analytics charts**: threat distribution donut, 24h attack frequency line chart, top target regions bar chart (Recharts).
+- **MITRE ATT&CK tactic heatmap** (`components/mitre-heatmap.tsx`): the full 14-tactic Enterprise matrix × severity, so tactics with zero observed activity are as visible as hot ones — not just what's been seen so far. Sequential single-hue (cyan) color scale, per-cell hover/focus detail, row totals.
+- **Threat feed sources panel** (`components/feed-sources.tsx`): every configured feed (`lib/feeds.ts`) is always shown — live or simulated — with its event count, auth requirement, and the actual upstream error when it's falling back, so no source is ever silently missing from the UI.
 - **Drill-down slide-over**: click any map node, feed entry, or table row to open a detail panel with geolocation, IOC data, MITRE ATT&CK tactics, confidence score, and a raw JSON payload expander.
 - **Live feed log**: streaming ticker with auto-scroll and pause-on-hover.
 - **Aggregator API route** (`app/api/threats`) that fans out to 4 open-source threat intel feeds in parallel, normalizes them into a common schema, and caches the result for 60s.
