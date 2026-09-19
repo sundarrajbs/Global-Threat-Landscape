@@ -6,7 +6,8 @@ A real-time **Global Cyber Threat Intelligence Dashboard** — live malicious IP
 
 ## Features
 
-- **Interactive world map** with animated attack flow arcs, pulsing hotspot rings, and origin/target markers (`react-simple-maps`).
+- **3D Threat Globe** (`components/ThreatGlobe.tsx`) — a WebGL globe built with `deck.gl` (`_GlobeView`), rendering great-circle attack arcs, pulsing "glowing ring" impact markers, and a dark basemap, driven by a self-contained mock telemetry generator (new event every 800ms, buffer capped at 100). Auto-rotates and yields to the user on drag/zoom. Toggle between this and the 2D map from the tab bar above the map panel.
+- **Interactive 2D world map** with animated attack flow arcs, pulsing hotspot rings, and origin/target markers (`react-simple-maps`).
 - **Live metric ticker**: active threats, attacks/min, high-risk CVEs, top attacking country, critical alerts.
 - **Filtering engine**: free-text search over IOCs/countries, threat-type toggles, severity toggles, region select.
 - **Analytics charts**: threat distribution donut, 24h attack frequency line chart, top target regions bar chart (Recharts).
@@ -106,4 +107,5 @@ vercel
 ## Notes
 
 - This project surfaces real vendor/CVE/IP data from public feeds for security-awareness and SOC-dashboard demonstration purposes. Origin/target geolocation for feeds that don't publish geo data (URLhaus, ThreatFox, CISA KEV) is illustrative, not measured.
-- `npm install` currently requires `--legacy-peer-deps` because `react-simple-maps@3` has not yet published an updated peer-dependency range for React 19; this is purely a peer-dependency metadata mismatch — the library itself works fine with React 19.
+- `react-simple-maps@3` has not yet published an updated peer-dependency range for React 19 — this is purely a peer-dependency metadata mismatch (the library itself works fine with React 19). The checked-in `.npmrc` sets `legacy-peer-deps=true` so a plain `npm install` resolves it automatically; no manual flag needed.
+- `@deck.gl/mesh-layers`, `@deck.gl/extensions`, and `@deck.gl/widgets` are installed alongside `@deck.gl/geo-layers`/`@deck.gl/react` even though `ThreatGlobe` doesn't use their features — those packages statically import them internally, so webpack fails to bundle without them present.

@@ -12,7 +12,8 @@ import { DrillDownModal } from "@/components/drill-down-modal";
 import { useThreats } from "@/hooks/use-threats";
 import { filterThreats } from "@/lib/filter-threats";
 import type { ThreatEvent, ThreatFilters } from "@/lib/types";
-import { AlertOctagon, Globe2 } from "lucide-react";
+import { AlertOctagon, Globe2, Map as MapIcon } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 const GlobalMap = dynamic(
   () => import("@/components/global-map").then((mod) => mod.GlobalMap),
@@ -21,6 +22,20 @@ const GlobalMap = dynamic(
     loading: () => (
       <div className="flex h-full w-full items-center justify-center rounded-xl border border-cyber-border bg-[#040610] text-sm text-slate-600">
         Rendering global threat map…
+      </div>
+    ),
+  }
+);
+
+// 3D globe uses a WebGL canvas (deck.gl) — must stay out of the server bundle
+// and skip SSR entirely to avoid hydration mismatches.
+const ThreatGlobe = dynamic(
+  () => import("@/components/ThreatGlobe").then((mod) => mod.ThreatGlobe),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-full w-full items-center justify-center rounded-xl border border-cyber-border bg-[#040610] text-sm text-slate-600">
+        Initializing 3D threat globe…
       </div>
     ),
   }
@@ -47,13 +62,28 @@ export default function Home() {
         <MetricsBar stats={data?.stats} isLoading={isLoading} />
 
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-[2fr_1fr]">
-          <div className="h-[480px]">
-            <GlobalMap
-              events={filteredEvents}
-              onSelect={setSelectedEvent}
-              selectedId={selectedEvent?.id}
-            />
-          </div>
+          <Tabs defaultValue="globe" className="flex h-[480px] flex-col gap-2">
+            <TabsList>
+              <TabsTrigger value="globe">
+                <Globe2 className="mr-1.5 h-3.5 w-3.5" />
+                3D Globe
+              </TabsTrigger>
+              <TabsTrigger value="map">
+                <MapIcon className="mr-1.5 h-3.5 w-3.5" />
+                2D Map
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="globe" className="min-h-0 flex-1">
+              <ThreatGlobe />
+            </TabsContent>
+            <TabsContent value="map" className="min-h-0 flex-1">
+              <GlobalMap
+                events={filteredEvents}
+                onSelect={setSelectedEvent}
+                selectedId={selectedEvent?.id}
+              />
+            </TabsContent>
+          </Tabs>
           <FeedLog events={filteredEvents} onSelect={setSelectedEvent} />
         </div>
 
