@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 222 47% 4%;
+  --foreground: 210 20% 92%;
+  --card: 222 40% 6%;
+  --card-foreground: 210 20% 92%;
+  --popover: 222 40% 6%;
+  --popover-foreground: 210 20% 92%;
+  --primary: 189 94% 55%;
+  --primary-foreground: 222 47% 4%;
+  --secondary: 222 30% 12%;
+  --secondary-foreground: 210 20% 92%;
+  --muted: 222 30% 12%;
+  --muted-foreground: 215 16% 57%;
+  --accent: 222 30% 14%;
+  --accent-foreground: 210 20% 92%;
+  --destructive: 356 90% 61%;
+  --destructive-foreground: 210 20% 98%;
+  --border: 222 25% 16%;
+  --input: 222 25% 16%;
+  --ring: 189 94% 55%;
+  --radius: 0.6rem;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: #05070d;
+  color: hsl(var(--foreground));
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Subtle animated grid + vignette backdrop for the SOC aesthetic */
+.cyber-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: #05070d;
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(34, 211, 238, 0.08), transparent 35%),
+    radial-gradient(circle at 85% 0%, rgba(251, 61, 74, 0.06), transparent 40%),
+    linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+  background-size: auto, auto, 42px 42px, 42px 42px;
+}
+
+.cyber-scanline::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(34, 211, 238, 0.06) 50%,
+    transparent 100%
+  );
+  background-size: 100% 6px;
+  animation: scan 5s linear infinite;
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 12px rgba(34, 211, 238, 0.55);
+}
+.text-glow-red {
+  text-shadow: 0 0 12px rgba(251, 61, 74, 0.55);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #1b2436;
+  border-radius: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #22d3ee55;
+}
+
+@keyframes blink-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+.animate-blink-dot {
+  animation: blink-dot 1.4s ease-in-out infinite;
+}
