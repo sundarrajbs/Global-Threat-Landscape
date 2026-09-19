@@ -41,3 +41,31 @@ export const TYPE_ORDER: ThreatType[] = [
 ];
 
 export const SEVERITY_ORDER: ThreatSeverity[] = ["critical", "high", "medium", "low"];
+
+export interface MitreTactic {
+  /** Exact string stored on ThreatEvent.mitreTactics, e.g. "TA0001 Initial Access". */
+  id: string;
+  code: string;
+  name: string;
+}
+
+// Full MITRE ATT&CK Enterprise tactic list, in kill-chain order. Feeds/mock
+// data currently only assign a subset — the rest render as zero-count rows
+// so the heatmap always shows complete tactic coverage, not just what's
+// been observed so far.
+export const MITRE_TACTIC_ORDER: MitreTactic[] = [
+  { id: "TA0043 Reconnaissance", code: "TA0043", name: "Reconnaissance" },
+  { id: "TA0042 Resource Development", code: "TA0042", name: "Resource Development" },
+  { id: "TA0001 Initial Access", code: "TA0001", name: "Initial Access" },
+  { id: "TA0002 Execution", code: "TA0002", name: "Execution" },
+  { id: "TA0003 Persistence", code: "TA0003", name: "Persistence" },
+  { id: "TA0004 Privilege Escalation", code: "TA0004", name: "Privilege Escalation" },
+  { id: "TA0005 Defense Evasion", code: "TA0005", name: "Defense Evasion" },
+  { id: "TA0006 Credential Access", code: "TA0006", name: "Credential Access" },
+  { id: "TA0007 Discovery", code: "TA0007", name: "Discovery" },
+  { id: "TA0008 Lateral Movement", code: "TA0008", name: "Lateral Movement" },
+  { id: "TA0009 Collection", code: "TA0009", name: "Collection" },
+  { id: "TA0011 Command and Control", code: "TA0011", name: "Command and Control" },
+  { id: "TA0010 Exfiltration", code: "TA0010", name: "Exfiltration" },
+  { id: "TA0040 Impact", code: "TA0040", name: "Impact" },
+];

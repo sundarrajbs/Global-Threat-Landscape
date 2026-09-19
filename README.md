@@ -11,6 +11,8 @@ A real-time **Global Cyber Threat Intelligence Dashboard** — live malicious IP
 - **Live metric ticker**: active threats, attacks/min, high-risk CVEs, top attacking country, critical alerts.
 - **Filtering engine**: free-text search over IOCs/countries, threat-type toggles, severity toggles, region select.
 - **Analytics charts**: threat distribution donut, 24h attack frequency line chart, top target regions bar chart (Recharts).
+- **MITRE ATT&CK tactic heatmap** (`components/mitre-heatmap.tsx`): the full 14-tactic Enterprise matrix × severity, so tactics with zero observed activity are as visible as hot ones — not just what's been seen so far. Sequential single-hue (cyan) color scale, per-cell hover/focus detail, row totals.
+- **Threat feed sources panel** (`components/feed-sources.tsx`): every configured feed (`lib/feeds.ts`) is always shown — live or simulated — with its event count, auth requirement, and the actual upstream error when it's falling back, so no source is ever silently missing from the UI.
 - **Drill-down slide-over**: click any map node, feed entry, or table row to open a detail panel with geolocation, IOC data, MITRE ATT&CK tactics, confidence score, and a raw JSON payload expander.
 - **Live feed log**: streaming ticker with auto-scroll and pause-on-hover.
 - **Aggregator API route** (`app/api/threats`) that fans out to 4 open-source threat intel feeds in parallel, normalizes them into a common schema, and caches the result for 60s.

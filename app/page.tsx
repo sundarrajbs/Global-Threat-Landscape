@@ -9,6 +9,8 @@ import { AnalyticsCharts } from "@/components/analytics-charts";
 import { ThreatTable } from "@/components/threat-table";
 import { FeedLog } from "@/components/feed-log";
 import { DrillDownModal } from "@/components/drill-down-modal";
+import { FeedSources } from "@/components/feed-sources";
+import { MitreHeatmap } from "@/components/mitre-heatmap";
 import { useThreats } from "@/hooks/use-threats";
 import { filterThreats } from "@/lib/filter-threats";
 import type { ThreatEvent, ThreatFilters } from "@/lib/types";
@@ -61,6 +63,8 @@ export default function Home() {
       <main className="container mt-4 flex flex-col gap-4">
         <MetricsBar stats={data?.stats} isLoading={isLoading} />
 
+        <FeedSources sources={data?.sources} isLoading={isLoading} />
+
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-[2fr_1fr]">
           <Tabs defaultValue="globe" className="flex h-[480px] flex-col gap-2">
             <TabsList>
@@ -95,6 +99,8 @@ export default function Home() {
         />
 
         <AnalyticsCharts events={filteredEvents} />
+
+        <MitreHeatmap events={filteredEvents} />
 
         <ThreatTable
           events={filteredEvents}
